@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Recipes</title>
+</head>
+
+<body>
+  <%- include('../partials/_nav.ejs') %>
+  <h1>Welcome to My Recipes</h1>
+  <a href="/recipes/new">Add new recipe</a>
+  <% if(recipes && recipes.length > 0) {%>
+  <% recipes.forEach(recipe => { %>
+  <p><%= recipe.name %> Instruction: <%= recipe.instruction %></p>
+  <a href="/recipes/<%= recipe._id %>">More details on <%= recipe.name %></a>
+  <form action="/recipes/<%= recipe._id %>?_method=DELETE" method="POST">
+    <button type="submit">Delete <%= recipe.name %></button>
+  </form>
+  <% })}else{ %>
+  <p>You have not created any recipes yet.</p>
+  <% } %>
+</body>
+
+</html>
