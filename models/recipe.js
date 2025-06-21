@@ -7,12 +7,15 @@ const recipeSchema = new mongoose.Schema({
         },
     instruction:{
         type:String,
-         required:true
         },
     owner:{
         type:mongoose.Schema.Types.ObjectId,
          ref:'User'
-        }
+        },
+        ingeredients:[{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'Ingredient'
+        }]
 })
 
 const Recipe = mongoose.model('Recipe', recipeSchema)
