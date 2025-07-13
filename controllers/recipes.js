@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const { render } = require('ejs')
 const Recipe = require('../models/recipe')
+const Ingredient = require('../models/ingredient')
 const { route } = require('./auth')
 
 router.get('/', async (req, res) => {
@@ -15,7 +16,8 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/new', async (req, res) => {
-    res.render('recipes/new.ejs')
+    const ingredients = await Ingredient.find()
+    res.render('recipes/new.ejs', {ingredients})
 })
 
 router.post('/', async (req, res) => {
@@ -32,7 +34,7 @@ router.post('/', async (req, res) => {
 
 router.get('/:recipeId', async (req, res) => {
     try {
-        const recipe = await Recipe.findById(req.params.recipeId).populate('owner')
+        const recipe = await Recipe.findById(req.params.recipeId).populate('owner').populate('ingredients')
         res.render('recipes/show.ejs', { recipe })
     } catch (error) {
         console.log(error);
@@ -58,7 +60,8 @@ router.delete('/:recipeId', async (req, res) => {
 router.get('/:recipeId/edit', async (req,res)=>{
     try{
         const recipe = await Recipe.findById(req.params.recipeId)
-        res.render('recipes/edit.ejs', {recipe})
+        const ingredients = await Ingredient.find()
+        res.render('recipes/edit.ejs', {recipe, ingredients})
     }catch(error){
         console.log(error);
         res.redirect('/')

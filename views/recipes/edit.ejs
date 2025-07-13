@@ -1,19 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Recipe</title>
-</head>
-<body>
-    <%- include('../partials/_nav.ejs') %>
-<form action="/recipes/<%= recipe._id %>?_method=PUT" method="POST">
-    <input type="text" name="name" id="name" value="<%= recipe.name %>"><br>
-    
-    <textarea name="instruction" id="instruction" cols="30" rows="10"><%= recipe.instruction %></textarea><br>
-    
-    <button type="submit">Edit Recipe</button>
-</form>
 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Recipe</title>
+</head>
+
+<body>
+  <%- include('../partials/_nav.ejs') %>
+  <form action="/recipes/<%= recipe._id %>?_method=PUT" method="POST">
+    <input type="text" name="name" id="name" value="<%= recipe.name %>"><br>
+    <textarea name="instruction" id="instruction" cols="30" rows="10"><%= recipe.instruction %></textarea><br>
+    <p>Ingredients:</p>
+    <% ingredients.forEach(ingredient => { %>
+    <label>
+      <input type="checkbox" name="ingredients" value="<%= ingredient._id %>" <%= recipe.ingredients.includes(ingredient._id.toString()) ? 'checked' : '' %>>
+      <%= ingredient.name %>
+    </label><br>
+    <% }) %>
+    <button type="submit">Edit Recipe</button>
+    <h2>Add new Ingredients</h2>
+    <form action="/ingredients" method="post">
+      <input type="text" name="name" id="name" placeholder="ingredient Name">
+      <button type="submit">Add Ingredient</button>
+    </form>
+  </form>
 </body>
+
 </html>

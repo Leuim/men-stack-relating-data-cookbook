@@ -9,10 +9,14 @@
 
 <body>
   <%- include('../partials/_nav.ejs') %>
-  <h3><%= recipe.name %></h3>
-  <p><%= recipe.instruction %></p>
+  <h2>Recipe Name: <%= recipe.name %></h3>
+  <h2>Recipe Instructions: <br><%= recipe.instruction %></h4>
+  <hr>
+  <h2>Recipe Ingredients: <br></h5>
+  <% recipe.ingredients.forEach((ingredient)=>{ %>
+    <p><%= ingredient.name %></p>
+    <% }) %>
   <a href="/recipes/<%= recipe._id %>/edit"><button>Edit <%= recipe.name %></button></a>
-  
 </body>
 
 </html>
